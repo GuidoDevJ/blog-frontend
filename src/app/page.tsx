@@ -1,101 +1,49 @@
-import Image from "next/image";
+'use client'
+import DarkModeButton from '@/components/Buttons/DarkMode';
+import Footer from '@/components/Footer/Footer';
+import Header from '@/components/Header/Header';
+import PostContainer from '@/components/PostContainer/PostContainer';
+import { useState } from 'react';
+
+const initialPosts = [
+  {
+    imageUrl:
+      'https://s3-alpha-sig.figma.com/img/de8c/1850/dd7369da5dc5e54aacb63281634e2739?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HCJkB5mwVTZlDrLjw1cXec406ZHdaHDw4Fhfn~9HPa2Sy2JotSxIfDprLb~Q3rK8AsUGX~Yx~M-lRF1kRY73BIfusc24Lrv6jbloY3-47ZjYCvw3yU2jx6dm2W0qj1dAiKeZMjIaa~NsArjVF8caNOvDhfXu3zh0vd5JSx9TXnIR3yskjvD1mHm2B20G~1xa2ejlfQnwPOysJTEahPJWUARbT-fK1DcgNrpjxC2ckPWx~RYxyWhBoSVa3EDSw0a~rxsYfXuQTzcd0vEuePURzoKZMcyTYfZ5tEOCJnk9xy1eo2PTpnTv6-ZC4Mqeb-GoYmE5LtsTzdROzbc8axs3QQ__',
+    tags: ['Etiqueta', 'Etiqueta', 'Etiqueta', 'Etiqueta'],
+    title: 'Este es el título del post',
+    date: '09 oct 2024',
+  },
+];
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [posts, setPosts] = useState(initialPosts);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <div className="w-[90%] sm:w-[96%] mx-auto flex justify-end mt-2">
+        <DarkModeButton />
+      </div>
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start dark:text-[#fff] flex-grow">
+        <div className="w-full flex flex-col justify-center items-center">
+          <h1 className="font-bold text-5xl sm:text-4xl lg:text-4xl xl:text-5xl mt-2 mb-2">
+            Código y mate
+          </h1>
+          <div className="w-[80%] sm:w-[90%] grid items-center grid-cols-1 sm:grid-cols-3 xl:grid-cols-5 gap-4">
+            {posts.map((post, index) => (
+              <PostContainer
+                key={index}
+                imageUrl={post.imageUrl}
+                tags={post.tags}
+                title={post.title}
+                date={post.date}
+              />
+            ))}
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <hr className="w-[80%] sm:w-[90%] mx-auto" />
+      <Footer />
     </div>
   );
 }
