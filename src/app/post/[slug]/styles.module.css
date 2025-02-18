@@ -1,0 +1,47 @@
+.img img:first-child {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.img img {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.img h1 {
+  text-align: center;
+  font-size: 2.4rem;
+  font-family: sans-serif;
+  margin: 1rem 0;
+}
+
+.img h2 {
+  text-align: left;
+  font-size: 2rem;
+  font-family: sans-serif;
+  margin: 1rem 0;
+}
+
+.img li {
+  list-style: square inside;
+}
+
+.img blockquote {
+  border-left: 4px solid #ddd; /* Borde izquierdo similar al de GitHub */
+  margin: 1.5em 0; /* Margen superior e inferior */
+  padding: 0.5em 1em; /* Padding interno */
+  color: #6a737d; /* Color de texto similar al de GitHub */
+  background-color: #f6f8fa; /* Fondo ligeramente gris */
+  font-style: italic; /* Texto en cursiva */
+  border-radius: 4px; /* Bordes redondeados */
+}
+
+.img blockquote p {
+  margin: 0; /* Elimina el margen por defecto del párrafo dentro del blockquote */
+}
+
+@media (min-width: 768px) {
+  .img img {
+    width: 50%;
+  }
+}

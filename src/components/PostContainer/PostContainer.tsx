@@ -1,15 +1,21 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface PostContainerProps {
   imageUrl: string;
   tags: string[];
   title: string;
   date: string;
+  postId?: string;
 }
 
-const PostContainer = ({ imageUrl, tags, title, date }: PostContainerProps) => {
+const PostContainer = ({ imageUrl, tags, title, date,postId }: PostContainerProps) => {
+  const nagigate = useRouter();
+  const navigateToPost = () => {
+    nagigate.push(`/post/${postId}`);
+  }
   return (
-    <div className="sm:h-[360px] bg-[#FFFFFF] border-[1px] rounded-md shadow-custom p-2 w-full dark:bg-secondary dark:border-transparent">
+    <div className="sm:h-[360px] bg-[#FFFFFF] border-[1px] rounded-md shadow-custom p-2 w-full dark:bg-secondary dark:border-transparent cursor-pointer"  onClick={navigateToPost}>
       <div className="w-full sm:h-[60%] rounded-md overflow-hidden">
         <Image
           width={1000}
