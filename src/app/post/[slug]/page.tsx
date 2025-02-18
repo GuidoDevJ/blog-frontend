@@ -6,15 +6,20 @@ import html from 'remark-html';
 import sanitizeHtml from 'sanitize-html';
 import styles from './styles.module.css';
 
-export default async function MarkdownPage({
-  params,
-}: {
-  params: { slug: string };
+type Params = Promise<{ slug: string }>
+
+export default async function MarkdownPage(props: {
+  params: Params
 }) {
-  const bucketName = process.env.NEXT_PUBLIC_BUCKET_NAME;
-  const key = `${params.slug}.md`;
+  const params = await props.params
+
+  const slug = params.slug;
+
+  const bucketName = process.env.NEXT_PUBLIC_BUCKET_NAME as string;
+  const key = `${slug}.md`;
 
   try {
+    // Obtener contenido del archivo Markdown desde S3
     const markdownContent = await getMarkdownFile(bucketName, key);
     const processedContent = await remark().use(html).process(markdownContent);
     let contentHtml = processedContent.toString();
@@ -28,6 +33,7 @@ export default async function MarkdownPage({
       },
     });
 
+    // Devolver la estructura de la página con el contenido HTML procesado
     return (
       <>
         <Header />
@@ -38,7 +44,8 @@ export default async function MarkdownPage({
       </>
     );
   } catch (error) {
-    console.error('Error fetching Markdown file:', error);
+    // Manejo de errores al obtener el archivo Markdown
+    console.error(`Error fetching Markdown file from bucket ${bucketName} with key ${key}:`, error);
     return <div>Markdown file not found</div>;
   }
 }
