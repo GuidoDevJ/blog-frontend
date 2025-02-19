@@ -1,41 +1,22 @@
 'use client';
 
-import { db } from '@/utils/firebaseAdmin';
-import { collection, getDocs } from 'firebase/firestore';
 import { useCallback, useEffect, useState } from 'react';
 
 import DarkModeButton from '@/components/Buttons/DarkMode';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import PostContainer from '@/components/PostContainer/PostContainer';
+import { BlogPost } from '@/interface';
+import getPosts from '@/utils/request/getPosts';
 
 // Definir el tipo de datos de un BlogPost
-interface BlogPost {
-  id: string;
-  image: string;
-  tags: string[];
-  title: string;
-  date: string;
-  postId?: string;
-}
 
 export default function Home() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
   const obtenerBlogs = useCallback(async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'Blogs'));
-      const data = querySnapshot.docs.map((doc) => {
-        const post = doc.data();
-        return {
-          id: doc.id,
-          image: post.image,
-          postId: post.postId,
-          tags: post.tags.map((tag:string)=>tag.toUpperCase()),
-          title: post.title,
-          date: post.date?.seconds ? new Date(post.date.seconds * 1000).toLocaleDateString() : "Fecha no disponible"
-        } as BlogPost;
-      });
+      const data =  await getPosts()
       setPosts(data);
     } catch (error) {
       console.error('Error obteniendo blogs:', error);
@@ -64,6 +45,7 @@ export default function Home() {
             {posts.length > 0 ? (
               posts.map((post) => (
                 <PostContainer
+                  id={post.id}
                   key={post.id}
                   postId={post.postId}  
                   imageUrl={post.image}

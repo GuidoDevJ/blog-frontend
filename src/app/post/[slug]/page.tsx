@@ -1,22 +1,44 @@
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
+import getPost from '@/utils/request/getPost';
 import { getMarkdownFile } from '@/utils/s3';
+import { Metadata } from 'next';
 import { remark } from 'remark';
 import html from 'remark-html';
 import sanitizeHtml from 'sanitize-html';
 import styles from './styles.module.css';
 
-type Params = Promise<{ slug: string }>
+type Params = { slug: string };
 
-export default async function MarkdownPage(props: {
-  params: Params
-}) {
-  const params = await props.params
+type Props = {
+  params: Promise<Params>;
+};
 
-  const slug = params.slug;
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug= (await params).slug
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [post, id] = slug.split("*");
+
+  const dataPost = await getPost(id)
+  return {
+    title: `${dataPost?.title}`,
+    description: `Contenido del post ${dataPost?.title}, relacionados a ${dataPost?.tags.join(",")}`,
+    openGraph: {
+      title: `${dataPost?.title}`,
+      description: `Contenido del post ${dataPost?.title}, relacionados a ${dataPost?.tags.join(" , ")}`,
+      images:[dataPost?.image as string],
+      type: 'article',
+    },
+  };
+}
+
+export default async function MarkdownPage({ params }: Props) {
+  const slug= (await params).slug
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [postId,...other]= slug.split("*");
   const bucketName = process.env.NEXT_PUBLIC_BUCKET_NAME as string;
-  const key = `${slug}.md`;
+  const key = `${postId}.md`;
 
   try {
     // Obtener contenido del archivo Markdown desde S3
