@@ -24,7 +24,7 @@ const getPost = async (id: string): Promise<BlogPost | null> => {
         : 'Fecha no disponible',
     } as BlogPost;
   } catch (error) {
-    console.error("Error obteniendo el post:", error);
+    console.error('Error obteniendo el post:', error);
     return null;
   }
 };
