@@ -2,7 +2,7 @@ import localFont from 'next/font/local';
 import "./globals.css";
 import { Providers } from "./providers";
 
-const pixeboy = localFont({ src: './SciencePersonalUseOnly-JpG37.otf' })
+const pixeboy = localFont({ src: '../utils/fonts/SciencePersonalUseOnly-JpG37.otf' })
 
 export default function RootLayout({
   children,
