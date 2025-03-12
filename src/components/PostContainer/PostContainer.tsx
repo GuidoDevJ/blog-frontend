@@ -11,9 +11,9 @@ interface PostContainerProps {
 }
 
 const PostContainer = ({ imageUrl, tags, title, date,postId,id}: PostContainerProps) => {
-  const nagigate = useRouter();
+  const navigate = useRouter();
   const navigateToPost = () => {
-    nagigate.push(`/post/${postId}*${id}`);
+    navigate.push(`/post/${postId}*${id}`);
   }
   return (
     <div className="sm:h-[360px] bg-[#FFFFFF] border-[1px] rounded-md shadow-custom p-2 w-full dark:bg-secondary dark:border-transparent cursor-pointer"  onClick={navigateToPost}>

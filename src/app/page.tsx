@@ -6,17 +6,20 @@ import Header from '@/components/Header/Header';
 import { Loader } from '@/components/Loader/Loader';
 import PostContainer from '@/components/PostContainer/PostContainer';
 import { BlogPost } from '@/interface';
+import usePostState from '@/store/posts.state';
 import getPosts from '@/utils/request/getPosts';
 import { useCallback, useEffect, useState } from 'react';
 
 export default function Home() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const {setPosts:setPostsState} = usePostState((state)=>state)
 
   const obtenerBlogs = useCallback(async () => {
     setLoading(true);
     try {
       const data = await getPosts();
+      setPostsState(data);
       setPosts(data);
     } catch (error) {
       console.error('Error obteniendo blogs:', error);
