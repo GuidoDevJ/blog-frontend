@@ -67,7 +67,7 @@ export default async function MarkdownPage({ params }: Props) {
           <DarkModeButton />
         </div>
         <div
-          className={`${styles.img} w-[90%] md:w-[50%] font-sans mx-auto dark:text-[#fff]`}
+          className={`${styles.img} w-[90%] md:w-[50%] font-sans mx-auto dark:text-[#fff] `}
         >
           <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
         </div>
