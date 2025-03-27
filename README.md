@@ -1,4 +1,4 @@
-# Proyecto Frontend con Next.js  
+# Personal Blog 
 
 Este proyecto fue desarrollado utilizando **Next.js** para el frontend, incorporando tecnologías modernas para una experiencia optimizada y fluida.  
 
